@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUB ACERIAS</title>
     <link rel="stylesheet" href="../assets/css/estilos.css">
 </head>
@@ -11,53 +12,53 @@
     <div class="formulario">
         <h2>Registro de asociados - Acerias</h2>
 
-        <form id="FormRegistro" action="" method="post">
+        <form id="FormRegistro" action="" method="post" data-clave="asociados">
             <div class="grupo-input" class="grupo-input">
-                <label>Ingresar Documento:</label>
-                <input type="number" id="documento" placeholder="1938392928">
+                <label for="documento">Ingresar Documento:</label>
+                <input type="number" id="documento" name="documento" required placeholder="1938392928">
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar el Nombre</label>
-                <input type="text" id="nombre" required placeholder="pepito perez">
+                <label for="nombre">Ingresar el Nombre</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="pepito perez">
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar el Apellido</label>
-                <input type="text" id="apellido" required placeholder="perez sanches">
+                <label for="apellido">Ingresar el Apellido</label>
+                <input type="text" id="apellido" name="apellido" required placeholder="perez sanches">
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar la Fecha de Nacimiento</label>
-                <input type="date" id="fechaNacimiento" required placeholder="20/20/2020">
+                <label for="fechaNacimiento">Ingresar la Fecha de Nacimiento</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required placeholder="20/20/2020">
             </div>
 
             <div class="grupo-input">
                 <label>Ingresar el Genero</label>
                 <div class="grupo-radio">
                     <label>
-                        <input type="radio" id="Masculino" value="M">
+                        <input type="radio" id="Masculino" name="genero" value="M" required>
                         <span>Masculino</span>
                     </label>
                     <label>
-                        <input type="radio" id="Femenino" value="F">
+                        <input type="radio" id="Femenino" name="genero" value="F">
                         <span>Femenino</span>
                     </label>
                     <label>
-                        <input type="radio" id="otro" value="otro">
+                        <input type="radio" id="otro" name="genero" value="otro">
                         <span>Otro</span>
                     </label>
                 </div>
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar la Direccion</label>
-                <input type="text" id="direccionResidencia" required placeholder=" cra 21 #3-09">
+                <label for="direccionResidencia">Ingresar la Direccion</label>
+                <input type="text" id="direccionResidencia" name="direccionResidencia" required placeholder=" cra 21 #3-09">
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar la Ciudad</label>
-                <select id="ciudad" required>
+                <label for="ciudad">Ingresar la Ciudad</label>
+                <select id="ciudad" name="ciudad" required>
                     <option value="sogamoso">sogamoso</option>
                     <option value="duitama">duitama</option>
                     <option value="cerinza">cerinza</option>
@@ -65,13 +66,18 @@
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar el Email</label>
-                <input type="email" id="email" required placeholder="pepito@gmail.com">
+                <label for="email">Ingresar el Email</label>
+                <input type="email" id="email" name="email" required placeholder="pepito@gmail.com">
             </div>
 
             <div class="grupo-input">
-                <label>Ingresar el Telefono</label>
-                <input type="tel" id="telefono" required placeholder=" 31548576485">
+                <label for="telefono">Ingresar el Telefono</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder=" 31548576485">
+            </div>
+
+            <div class="grupo-input">
+                <label for="password">Ingresar la Contraseña</label>
+                <input type="password" id="password" name="password" required placeholder="********">
             </div>
 
             <div class="grupo-botones">
@@ -85,6 +91,8 @@
     </div>
     </form>
     </div>
+
+    <script src="../controladores/formulario.js"></script>
 </body>
 
 </html>

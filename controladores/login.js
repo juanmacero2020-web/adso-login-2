@@ -8,7 +8,8 @@ document.getElementById("formLogin").addEventListener("submit", function (event)
     const emailInput = document.getElementById("email").value;
     const passwordInput = document.getElementById("password").value;
 
-    const usuarioencontrado = usuarios.find(
+    const asociados = (JSON.parse(localStorage.getItem("asociados")) || []).map(a => ({ ...a, rol: "asociado" }));
+    const usuarioencontrado = usuarios.concat(asociados).find(
         u => u.email === emailInput && u.password === passwordInput);
 
     if (usuarioencontrado) {
