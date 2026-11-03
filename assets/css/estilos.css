@@ -14,6 +14,7 @@ body {
     box-sizing: border-box;
     width: 100%;
     max-width: 450px;
+    margin: 0 auto;
 }
 
 h2 {
@@ -72,7 +73,7 @@ input, select {
     border-radius: 5px;
 }
 
-.iniciar-sesion{
+.iniciar-sesion, .volver{
     margin: 10px 0 0;
     padding : 0;
     text-align: center;
