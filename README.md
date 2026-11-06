@@ -1,11 +1,11 @@
 # Club Acerías (adso-login)
 
 Prototipo web para un club de asociados: registro de asociados, préstamos, actividades y pagos.
-Es solo front-end (HTML, CSS y JavaScript). No tiene servidor ni base de datos: los datos se guardan en el `localStorage` del navegador.
+Front-end en HTML, CSS y JavaScript. El registro de asociados se guarda en MySQL con PHP (PDO); el login y los demás formularios son solo de demostración.
 
 ## Cómo abrirlo
 
-1. Copiar el proyecto en `C:\laragon\www\club_acerias` y encender Laragon.
+1. Copiar el proyecto en `C:\laragon\www\club_acerias` y encender Apache y MySQL en Laragon (base `club_acerias`, tabla `asociados`).
 2. Abrir `http://localhost/club_acerias/vista/login.html`.
 
 ## Cuentas de prueba (solo demostración)
@@ -14,8 +14,6 @@ Es solo front-end (HTML, CSS y JavaScript). No tiene servidor ni base de datos: 
 |---|---|---|
 | admin@gmail.com | 1234 | admin |
 | user1@gmail.com | 1234 | asociado |
-
-Quien se registre en `registro.html` también puede iniciar sesión, con rol asociado.
 
 ## Pantallas
 
@@ -32,16 +30,16 @@ Quien se registre en `registro.html` también puede iniciar sesión, con rol aso
 
 ```
 vista/          pantallas
-controladores/  lógica de cada pantalla (sesion.js protege las páginas, formulario.js guarda los formularios)
+controladores/  lógica de cada pantalla (login, dashboard y registro de asociados)
 assets/css/     estilos de login, registro y formularios (el panel usa Bootstrap)
-modelo/ config/ reservadas para una base de datos futura
+modelo/ config/ guardado de asociados en MySQL (conexion.php, asociado.php, guardarAsociado.php)
 ```
 
-Cada formulario guarda una lista en `localStorage` con el nombre `asociados`, `pagos`, `prestamos` o `actividades`
-(se puede ver con F12 > Application > Local Storage).
+Los formularios de pagos, préstamos y actividades todavía no guardan datos.
 
 ## Pendiente
 
 - Listados, edición y eliminación de registros.
 - Módulos Reportes y Mi Perfil.
-- Base de datos y validación real de sesión y roles (hoy es solo de demostración).
+- Guardar pagos, préstamos y actividades en la base de datos.
+- Validación real de sesión y roles (hoy es solo de demostración).

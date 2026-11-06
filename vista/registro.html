@@ -12,7 +12,7 @@
     <div class="formulario">
         <h2>Registro de asociados - Acerias</h2>
 
-        <form id="FormRegistro" action="" method="post" data-clave="asociados">
+        <form id="formRegistro" action="../modelo/guardarAsociado.php" method="post">
             <div class="grupo-input" class="grupo-input">
                 <label for="documento">Ingresar Documento:</label>
                 <input type="number" id="documento" name="documento" required placeholder="1938392928">
@@ -20,12 +20,12 @@
 
             <div class="grupo-input">
                 <label for="nombre">Ingresar el Nombre</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="pepito perez">
+                <input type="text" id="nombre" name="nombres" required placeholder="pepito perez">
             </div>
 
             <div class="grupo-input">
                 <label for="apellido">Ingresar el Apellido</label>
-                <input type="text" id="apellido" name="apellido" required placeholder="perez sanches">
+                <input type="text" id="apellido" name="apellidos" required placeholder="perez sanches">
             </div>
 
             <div class="grupo-input">
@@ -37,15 +37,15 @@
                 <label>Ingresar el Genero</label>
                 <div class="grupo-radio">
                     <label>
-                        <input type="radio" id="Masculino" name="genero" value="M" required>
+                        <input type="radio" id="Masculino" name="genero" value="Masculino" required>
                         <span>Masculino</span>
                     </label>
                     <label>
-                        <input type="radio" id="Femenino" name="genero" value="F">
+                        <input type="radio" id="Femenino" name="genero" value="Femenino">
                         <span>Femenino</span>
                     </label>
                     <label>
-                        <input type="radio" id="otro" name="genero" value="otro">
+                        <input type="radio" id="otro" name="genero" value="Otro">
                         <span>Otro</span>
                     </label>
                 </div>
@@ -85,6 +85,8 @@
                 <button type="reset">limpiar formulario</button>
             </div>
 
+            <p id="mensajeRegistro" role="status" aria-live="polite"></p>
+
             <div class="iniciar-sesion">
                 <p>Ya tienes una cuenta? <a href="login.html">Iniciar sesion</a></p>
             </div>
@@ -92,7 +94,7 @@
     </form>
     </div>
 
-    <script src="../controladores/formulario.js"></script>
+    <script src="../controladores/asociados.js"></script>
 </body>
 
 </html>
