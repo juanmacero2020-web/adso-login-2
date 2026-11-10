@@ -1,23 +1,36 @@
-const usuarios = [
-    { email: "admin@gmail.com", password: "1234", rol: "admin", nombre: "amd" },
-    { email: "user1@gmail.com", password: "1234", rol: "asociado", nombre: "pepita" }
-];
-
-document.getElementById("formLogin").addEventListener("submit", function (event) {
+const formulario = document.getElementById("formLogin");
+formulario.addEventListener("submit", async function (event) {
     event.preventDefault();
-    const emailInput = document.getElementById("email").value;
-    const passwordInput = document.getElementById("password").value;
+    const boton = formulario.querySelector("button[type='submit']");
+    const  mensaje = document.getElementById("mensajeError");
+    boton.disabled = true;
+    
+  
+  try {
+   const respuesta = await fetch(formulario.action, {
+     method: "POST",
+     headers: {"content-type": "application/json"},
+     body: JSON.stringify(Object.fromEntries(new FormData(formulario).entries())),
+   });
+    const resultado = await respuesta.json();
+ if (!resultado.success) {
+    mensaje.textContent = "no fue posible iniciar sesion";
+    boton.disabled = false;
+    return;
 
-    const asociados = (JSON.parse(localStorage.getItem("asociados")) || []).map(a => ({ ...a, rol: "asociado" }));
-    const usuarioencontrado = usuarios.concat(asociados).find(
-        u => u.email === emailInput && u.password === passwordInput);
-
-    if (usuarioencontrado) {
+   }
         localStorage.setItem('logueado', 'true');
-        localStorage.setItem('rol', usuarioencontrado.rol);
-        localStorage.setItem('nombre', usuarioencontrado.nombre);
+        localStorage.setItem('rol', resultado.rol);
+        localStorage.setItem('nombre', resultado.nombre);
+        
         window.location.href = "dashboard.html";
-    } else {
-        alert("Usuario o contraseña incorrectas");
-    }
+  }catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    mensaje.textContent = "Error al iniciar sesión, inténtalo de nuevo más tarde.";
+  } finally {
+    boton.disabled = false;
+  }
+
+
+  
 });
