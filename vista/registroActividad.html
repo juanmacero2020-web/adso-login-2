@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLUB ACERIAS - Registro de actividades</title>
+    <link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+
+<body>
+    -- Formulario 
+    <div>
+        <h2>Registro de actividades</h2>
+
+        <form data-clave="actividades">
+            <div class="grupo-input">
+                <label for="nombre">Ingresar el Nombre</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="torneo de tejo">
+            </div>
+
+            <div class="grupo-input">
+                <label for="tipo">Ingresar el Tipo</label>
+                <select id="tipo" name="tipo">
+                    <option>Deportiva</option>
+                    <option>Cultural</option>
+                    <option>Social</option>
+                    <option>Capacitación</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="descripcion">Ingresar la Descripcion</label>
+                <input type="text" id="descripcion" name="descripcion" placeholder="torneo entre asociados">
+            </div>
+
+            <div class="grupo-input">
+                <label for="fecha">Ingresar la Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="hora">Ingresar la Hora</label>
+                <input type="time" id="hora" name="hora" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="lugar">Ingresar el Lugar</label>
+                <input type="text" id="lugar" name="lugar" required placeholder="salon social">
+            </div>
+
+            <div class="grupo-input">
+                <label for="cupo">Ingresar el Cupo maximo</label>
+                <input type="number" id="cupo" name="cupo" min="1" required placeholder="30">
+            </div>
+
+            <div class="grupo-input">
+                <label for="costo">Ingresar el Costo (0 si es gratis)</label>
+                <input type="number" id="costo" name="costo" min="0" required placeholder="0">
+            </div>
+
+            <div class="grupo-botones">
+                <button type="submit">guardar</button>
+                <button type="reset">limpiar formulario</button>
+            </div>
+
+            
+            <p class="volver"><a href="actividades.html">Volver a actividades</a></p>
+        </form>
+    </div>
+
+</body>
+
+</html>

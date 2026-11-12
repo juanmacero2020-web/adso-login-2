@@ -1,0 +1,46 @@
+/* Estilos de las paginas con Bootstrap (actividades).
+   Usa los mismos colores de estilos.css para que se vea igual que el login y los registros. */
+:root {
+    --azul-club: rgb(31, 58, 95);
+    --naranja-club: rgb(194, 65, 12);
+    --gris-club: rgb(230, 234, 239);
+}
+
+body {
+    background-color: var(--gris-club);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Barra superior: azul con borde naranja, como los titulos h2 de los formularios */
+.encabezado-club {
+    background-color: var(--azul-club);
+    color: rgb(255, 255, 255);
+    border-bottom: 6px solid var(--naranja-club);
+}
+
+/* Tarjeta de la tabla: esquinas redondeadas y borde naranja abajo, como los formularios */
+.tarjeta-club {
+    border: 0;
+    border-bottom: 6px solid var(--naranja-club);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Cabecera de la tabla en azul del club en vez del negro de Bootstrap */
+.table-dark {
+    --bs-table-bg: var(--azul-club);
+    --bs-table-border-color: var(--azul-club);
+}
+
+/* Boton naranja que pasa a azul al pasar el mouse */
+.btn-club {
+    --bs-btn-color: rgb(255, 255, 255);
+    --bs-btn-bg: var(--naranja-club);
+    --bs-btn-border-color: var(--naranja-club);
+    --bs-btn-hover-color: rgb(255, 255, 255);
+    --bs-btn-hover-bg: var(--azul-club);
+    --bs-btn-hover-border-color: var(--azul-club);
+    --bs-btn-active-color: rgb(255, 255, 255);
+    --bs-btn-active-bg: var(--azul-club);
+    --bs-btn-active-border-color: var(--azul-club);
+}
