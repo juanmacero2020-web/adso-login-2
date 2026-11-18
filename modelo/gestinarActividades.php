@@ -10,6 +10,30 @@ function leerDatos() {
     }
     return $datos;
 }
+ 
+function validarActividad($datos) {
+    $nombre = $datos['nombreActividad'] ?? null;
+    $fecha = $datos['fechaEvento'] ?? null;
+    $municipio = $datos['municipio'] ?? null;
+    if (!is_string($nombre) || trim($nombre) === '' || !is_string($municipio) || trim($municipio) === '' || strlen (municipio) > 50) {
+        http_response_code(400);
+        throw new Exception("ingresa un nombre de actividad y un municipio válido");
+    }
+   return [
+        'nombreActividad' => trim($nombre),
+        'fechaEvento' => $fecha,
+        'municipio' => trim($municipio)
+    ];
+}
+
+function validarId($id) {
+    $idactividad = filter_var($id, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+    if ($idactividad === false) {
+        http_response_code(400);
+        throw new Exception("ID de actividad inválido");
+    }
+    return $idactividad;
+}
 
 try {
     if (!isset($_SESSION['documento'], $_SESSION['rol'])) {
@@ -47,7 +71,36 @@ try {
             ];
             http_response_code(201);
             break;
-       
+        case 'PUT':
+            $datos = leerDatos();
+            $datos['idActividad'] = validarId($datos['idActividad'] ?? null);
+            $datos = array_merge($datos, validarActividad($datos));
+
+          if (!$actividades->editar($datos)) {
+                http_response_code(404);
+                throw new Exception("No se encontró la actividad");
+            }
+            $resultado = [
+                "sucess" => true,
+                "mensaje" => "Actividad actualizada correctamente"
+            ];
+            http_response_code(200);
+            break;
+            
+        case 'DELETE':
+            $datos = leerDatos();
+            $idActividad = validarId($datos['idActividad'] ?? null);
+
+            if (!$actividades->eliminar($idActividad)) {
+                http_response_code(404);
+                throw new Exception("No se encontró la actividad");
+            }
+            $resultado = [
+                "sucess" => true,
+                "mensaje" => "Actividad eliminada correctamente"
+            ];
+            http_response_code(200);
+            break;
     }
   echo json_encode($resultado);
 

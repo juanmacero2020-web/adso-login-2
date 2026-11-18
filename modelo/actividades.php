@@ -33,13 +33,32 @@ class Actividades
             ':fechaEvento' => $datos->["fechaEvento"],
             ':municipio' => $datos->["municipio"]
         ]);
-       
     }
-    public function eliminar($id)
+    public function eliminar($idActividad)
     {
         $sql = "DELETE FROM actividades WHERE idActividad = :idActividad";
         $consulta = $this->conexion->prepare($sql);
         $consulta->execute([':idActividad' => $id]);
         return $consulta->rowCount() > 0;
+    }
+    public function editar($id, $datos)
+    {
+        $sql = "UPDATE actividades SET nombreActividad = :nombreActividad, fechaEvento = :fechaEvento, municipio = :municipio, totalRecaudado = :totalRecaudado WHERE idActividad = :idActividad";
+        $consulta = $this->conexion->prepare($sql);
+        return $consulta->execute([
+            ':nombreActividad' => $datos['nombreActividad'],
+            ':fechaEvento' => $datos['fechaEvento'],
+            ':municipio' => $datos['municipio'],
+            ':totalRecaudado' => $datos['totalRecaudado'],
+            ':idActividad' => $datos['idActividad']
+        ]);
+        if ($consulta->rowCount() > 0) {
+            return true; // Actualización exitosa
+        } 
+        
+        $verificar =this->conexion->prepare("SELECT 1 FROM actividades WHERE idActividad = :idActividad");
+        $verificar->execute([':idActividad' => $datos['idActividad']]);
+       
+        return(bool)$verificar->fetchColumn(); // Devuelve true si el registro existe, false si no existe
     }
 }
