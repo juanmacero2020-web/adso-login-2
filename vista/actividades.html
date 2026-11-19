@@ -31,7 +31,7 @@
                 Consulta las actividades programadas y su información.
             </p>
             <button
-                id="nuevaActividad"
+                id="botonNuevaActividad"
                 class="btn btn-club d-none"
                 type="button"
             >
@@ -93,6 +93,42 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de formulario: crear o editar una actividad (solo administradores) -->
+    <div class="modal fade" id="modalFormulario" tabindex="-1" aria-labelledby="tituloFormulario" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form class="modal-content" id="formularioActividad" novalidate>
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="tituloFormulario">Nueva actividad</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <input type="hidden" id="idActividad">
+                    <div class="mb-3">
+                        <label for="nombreActividad" class="form-label">Nombre de la actividad</label>
+                        <input type="text" class="form-control" id="nombreActividad" maxlength="100" required placeholder="Torneo de tejo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaEvento" class="form-label">Fecha del evento</label>
+                        <input type="date" class="form-control" id="fechaEvento" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="municipio" class="form-label">Municipio</label>
+                        <input type="text" class="form-control" id="municipio" maxlength="50" required placeholder="Sogamoso">
+                    </div>
+                    <div class="mb-0" id="campoTotalRecaudado">
+                        <label for="totalRecaudado" class="form-label">Total recaudado (COP)</label>
+                        <input type="number" class="form-control" id="totalRecaudado" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-club" id="botonGuardar">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 
