@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -8,23 +8,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <title>CLUB ACERIAS - Panel principal</title>
     <style>
-
-       .modulo-card{
+        .modulo-card {
             background-color: rgb(243, 255, 181);
             border-radius: 10px;
             border-color: rgb(60, 0, 255);
             cursor: pointer;
             height: 100%;
         }
-        .modulo-card.asociados {
-            border-top-color: #cd0f0f;
-        }
         .modulo-card:hover {
             transform: translate(-10px);
             box-shadow: 0 10px 20px rgba(0, 0, 128, 0.418) !important;
         }
-        .header-mr{
-
+        .header-mr {
             color: rgb(235, 145, 28);
             padding: 20px 30px;
         }
@@ -40,7 +35,7 @@
         <h3>CLUB ACERIAS - Panel principal</h3>
         <div class="text-end">
             <small id="nombreUsuario">nombreUsuario</small>
-            <button id="btnCerrarSesion" class="btn btn-danger btn-sm mt1"><i class="bi bi-box-arrow-right"></i> Cerrar
+            <button id="btnCerrarSesion" class="btn btn-danger btn-sm"><i class="bi bi-box-arrow-right"></i> Cerrar
                 sesión</button>
         </div>
     </div>
@@ -51,7 +46,7 @@
             <div class="col-md-3">
                 <div class="card modulo-card shadow-sm p-3">
                     <i class="bi bi-people icono-principal"></i>
-                    <!-- Nuevo: ahora abre la lista de asociados; desde ahi se llega a registro.html -->
+                    <!-- Nuevo: ahora abre el CRUD de asociados (antes abria registro.html) -->
                     <h4><a href="asociados.html" class="text-primary text-decoration-none stretched-link">Asociados</a></h4>
                     <strong>Gestión de asociados</strong>
                     <p class="text-muted">
@@ -60,7 +55,6 @@
                     </p>
                 </div>
             </div>
-
 
             <div class="col-md-3">
                 <div class="card modulo-card shadow-sm p-3">

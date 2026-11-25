@@ -159,7 +159,8 @@ try {
             break;
 
         case 'DELETE':
-            $idAsociado = validarId(leerDatos()['idAsociado'] ?? null);
+            $datos = leerDatos();
+            $idAsociado = validarId($datos['idAsociado'] ?? null);
 
             if ($idAsociado === (int) $_SESSION['idAsociado']) {
                 http_response_code(400);

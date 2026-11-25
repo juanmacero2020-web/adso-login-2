@@ -14,19 +14,6 @@ class Pagos
         $this->conexion = (new Conexion())->conectar();
     }
 
-    // Historial de abonos del asociado: se une con prestamos para filtrar por idAsociado
-    public function obtenerPagosAsociado($idAsociado)
-    {
-        $sql = "SELECT pc.idPago, pc.valorCuota, pc.fechaPago, pc.metodoPago, pc.idPrestamo
-                FROM pagos_cuotas pc
-                INNER JOIN prestamos p ON p.idPrestamo = pc.idPrestamo
-                WHERE p.idAsociado = :idAsociado
-                ORDER BY pc.fechaPago DESC, pc.idPago DESC";
-        $consulta = $this->conexion->prepare($sql);
-        $consulta->execute([':idAsociado' => $idAsociado]);
-        return $consulta->fetchAll();
-    }
-
     public function guardar($datos)
     {
         $sql = "INSERT INTO pagos_cuotas (valorCuota, fechaPago, metodoPago, idPrestamo)

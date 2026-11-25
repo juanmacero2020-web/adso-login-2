@@ -35,18 +35,6 @@ function validarPago($datos) {
         throw new Exception("El valor a abonar debe ser un número mayor a 0");
     }
 
-    $fecha = $datos['fechaPago'] ?? null;
-    $fechaValida = is_string($fecha) ? DateTime::createFromFormat('Y-m-d', $fecha) : false;
-    if (!$fechaValida || $fechaValida->format('Y-m-d') !== $fecha) {
-        http_response_code(400);
-        throw new Exception("Ingresa una fecha de pago válida");
-    }
-    // Comparar como texto Y-m-d funciona porque el formato ordena año, mes y dia
-    if ($fecha > date('Y-m-d')) {
-        http_response_code(400);
-        throw new Exception("La fecha de pago no puede ser futura");
-    }
-
     $metodoPago = $datos['metodoPago'] ?? null;
     if (!in_array($metodoPago, Pagos::METODOS_PAGO, true)) {
         http_response_code(400);
@@ -56,7 +44,8 @@ function validarPago($datos) {
     return [
         'idPrestamo' => validarId($datos['idPrestamo'] ?? null),
         'valorCuota' => round((float) $valor, 2),
-        'fechaPago' => $fecha,
+        // La fecha de pago ya no se pide en el formulario: siempre es la fecha de hoy (hora de Colombia)
+        'fechaPago' => date('Y-m-d'),
         'metodoPago' => $metodoPago
     ];
 }
@@ -81,12 +70,11 @@ try {
 
     switch ($metodo) {
         case 'GET':
-            // Datos para llenar la pagina: documento del formulario, prestamos para elegir e historial
+            // Datos para llenar la pagina: documento del formulario y prestamos para elegir
             $resultado = [
                 "success" => true,
                 "documento" => $_SESSION['documento'],
-                "prestamos" => $prestamos->obtenerPrestamosAsociado($_SESSION['idAsociado']),
-                "pagos" => $pagos->obtenerPagosAsociado($_SESSION['idAsociado'])
+                "prestamos" => $prestamos->obtenerPrestamosAsociado($_SESSION['idAsociado'])
             ];
             http_response_code(200);
             break;
@@ -107,10 +95,6 @@ try {
             if ($datos['valorCuota'] > $prestamo['saldo']) {
                 http_response_code(400);
                 throw new Exception("El abono no puede ser mayor al saldo pendiente ($" . number_format($prestamo['saldo'], 2, ',', '.') . ")");
-            }
-            if ($datos['fechaPago'] < $prestamo['fechaPrestamo']) {
-                http_response_code(400);
-                throw new Exception("La fecha de pago no puede ser anterior a la fecha del préstamo");
             }
 
             $pagos->guardar($datos);

@@ -149,6 +149,7 @@ function configurarAcciones() {
         accionesConfiguradas = true;
     }
 }
+
 function abrirEdicion(actividad) {
     formulario.reset();
     document.getElementById("idActividad").value = actividad.idActividad;
@@ -162,16 +163,16 @@ function abrirEdicion(actividad) {
     document.getElementById("botonGuardar").textContent = "Guardar cambios";
     modalFormulario.show();
 }
+
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
     const idActividad = document.getElementById("idActividad").value;
     const datos = {
         nombreActividad: document.getElementById("nombreActividad").value.trim(),
         fechaEvento: document.getElementById("fechaEvento").value,
-        municipio: document.getElementById("municipio").value.trim(),
-       
+        municipio: document.getElementById("municipio").value.trim()
     };
-    if (idActividad){
+    if (idActividad) {
         datos.idActividad = Number(idActividad);
         const total = document.getElementById("totalRecaudado").value;
         datos.totalRecaudado = total === "" ? null : Number(total);
@@ -179,11 +180,12 @@ formulario.addEventListener("submit", async (evento) => {
     try {
         await solicitarApi(idActividad ? "PUT" : "POST", datos);
         modalFormulario.hide();
-        alert ("actualizada correctamente");
+        // Antes decia "actualizada" tambien al crear
+        alert(idActividad ? "Actividad actualizada correctamente" : "Actividad guardada correctamente");
         cargarActividades();
-       
     } catch (error) {
-     alert( error.message);
+        alert(error.message);
     }
 });
-    cargarActividades();
+
+cargarActividades();

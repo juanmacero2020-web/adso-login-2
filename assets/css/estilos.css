@@ -43,18 +43,16 @@ label {
     display: flex;
     gap: 20px;
     margin-top: 10px;
-    transition: background-color 0.8s;
-    display: flex;
     justify-content: center;
     align-items: stretch;
 }
-button{
+
+button {
     flex: 1;
     padding: 6px;
     border-radius: 5px;
     background-color: rgb(194, 65, 12);
     color: rgb(255, 255, 255);
-
 }
 
 form {
@@ -64,7 +62,7 @@ form {
     margin: 2px 0;
     border: 5px rgb(154, 165, 177);
     border-radius: 10px;
-     border-bottom: 9px solid rgb(194, 65, 12);
+    border-bottom: 9px solid rgb(194, 65, 12);
 }
 
 input, select {
@@ -73,35 +71,24 @@ input, select {
     border-radius: 5px;
 }
 
-.iniciar-sesion, .volver{
+/* Enlaces de abajo del formulario: "Iniciar sesion" (registro) y "Crear cuenta" (login) */
+.iniciar-sesion, .crear-cuenta {
     margin: 10px 0 0;
-    padding : 0;
+    padding: 0;
     text-align: center;
 }
-.crear-cuenta{
-    margin: 10px 0 0;
-    padding : 0;
-    text-align: center;
-}
-input:focus,select:focus{
+
+input:focus, select:focus {
     border-color: aqua;
     box-shadow: 0 0 0 3px rgb(31, 41, 51);
 }
 
-.contenedor-formulario{
- background-color: antiquewhite;
- padding: 30px;
-border-radius: 8px;
-box-shadow: 0 4px 12px rgb(31, 41, 51);
-width: 100%;
-max-width: 500px;
-}
-button[type="submit"]{
+button[type="submit"] {
     background-color: rgb(31, 58, 95);
     color: rgb(255, 128, 0);
 }
 
-button[type="reset"]{
+button[type="reset"] {
     background-color: rgb(255, 128, 0);
     color: rgb(31, 58, 95);
 }

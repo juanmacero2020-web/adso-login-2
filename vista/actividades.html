@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUB ACERIAS - Actividades</title>
-    
+
     <!-- Bootstrap e iconos (los mismos del dashboard) para que la tabla tenga estilos.
          No se carga estilos.css porque limita el body a 450px y aplastaria la tabla. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,38 +63,8 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- Mensaje cuando no hay actividades (lo muestra controladores/actividades.js) -->
-            <div id="sinActividades" class="text-center py-5 text-secondary d-none">
-                <i class="bi bi-calendar-x fs-1"></i>
-                <p class="mt-2 mb-0">No hay actividades registradas.</p>
-            </div>
         </div>
     </main>
-
-    <!-- Modal de detalle: ventana emergente con la informacion de una actividad -->
-    <div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="tituloModalActividad" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="tituloModalActividad"></h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="descripcionModal" class="text-secondary"></p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0"><i class="bi bi-calendar3 me-2 text-primary"></i><span id="fechaModal"></span></li>
-                        <li class="list-group-item px-0"><i class="bi bi-clock me-2 text-primary"></i><span id="horaModal"></span></li>
-                        <li class="list-group-item px-0"><i class="bi bi-geo-alt me-2 text-primary"></i><span id="lugarModal"></span></li>
-                        <li class="list-group-item px-0"><i class="bi bi-person me-2 text-primary"></i><span id="responsableModal"></span></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal de formulario: crear o editar una actividad (solo administradores) -->
     <div class="modal fade" id="modalFormulario" tabindex="-1" aria-labelledby="tituloFormulario" aria-hidden="true">
@@ -104,7 +74,7 @@
                     <h2 class="modal-title fs-5" id="tituloFormulario">Nueva actividad</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                
+
                 <div class="modal-body">
                     <input type="hidden" id="idActividad">
                     <div class="mb-3">

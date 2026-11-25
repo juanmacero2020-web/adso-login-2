@@ -1,7 +1,7 @@
 <?php
 
 // Nuevo: hora de Colombia para las fechas (PHP en Laragon viene en UTC y despues de las 7 p. m.
-// "hoy" ya seria mañana). Lo usan las validaciones de fechas de pagos y prestamos.
+// "hoy" ya seria mañana). Lo usan la fecha de los pagos y el estado de los prestamos.
 date_default_timezone_set('America/Bogota');
 
 class conexion

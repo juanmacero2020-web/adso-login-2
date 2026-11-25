@@ -77,7 +77,7 @@ function mostrarAsociados() {
             crearCelda(asociado.prestamos)
         );
 
-        // Nuevo: botones de editar y eliminar, igual que en actividades.js
+        // Botones de editar y eliminar, igual que en actividades.js
         const acciones = document.createElement("td");
         acciones.className = "text-nowrap";
 

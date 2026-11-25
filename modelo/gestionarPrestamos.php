@@ -47,7 +47,7 @@ function validarPrestamo($datos) {
     ];
 }
 
-// Nuevo: igual que validarId() de gestionarActividades.php
+// Igual que validarId() de gestionarActividades.php
 function validarId($id) {
     $idPrestamo = filter_var($id, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
     if ($idPrestamo === false) {
@@ -57,7 +57,7 @@ function validarId($id) {
     return $idPrestamo;
 }
 
-// Nuevo: antes de editar o eliminar, el prestamo debe existir y no tener pagos (si no, se dañan los saldos)
+// Antes de editar o eliminar, el prestamo debe existir y no tener pagos (si no, se dañan los saldos)
 function revisarPrestamoSinPagos($prestamos, $idPrestamo, $accion) {
     $prestamo = $prestamos->obtenerPrestamo($idPrestamo);
     if (!$prestamo) {
@@ -78,7 +78,7 @@ try {
     }
 
     $metodo = $_SERVER['REQUEST_METHOD'];
-    // Nuevo: PUT (editar) y DELETE (eliminar), como en gestionarActividades.php
+    // PUT (editar) y DELETE (eliminar), como en gestionarActividades.php
     if (!in_array($metodo, ['GET', 'POST', 'PUT', 'DELETE'], true)) {
         http_response_code(405);
         throw new Exception("Método HTTP no permitido");
@@ -149,7 +149,8 @@ try {
             break;
 
         case 'DELETE':
-            $idPrestamo = validarId(leerDatos()['idPrestamo'] ?? null);
+            $datos = leerDatos();
+            $idPrestamo = validarId($datos['idPrestamo'] ?? null);
             revisarPrestamoSinPagos($prestamos, $idPrestamo, "eliminar");
 
             $prestamos->eliminar($idPrestamo);

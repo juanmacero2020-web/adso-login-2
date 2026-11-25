@@ -58,7 +58,7 @@ class Prestamos
         return $prestamo ? $this->calcularResumen($prestamo) : false;
     }
 
-    // Nuevo: un prestamo por su id, de cualquier asociado (lo usa el admin antes de editar o eliminar)
+    // Un prestamo por su id, de cualquier asociado (lo usa el admin antes de editar o eliminar)
     public function obtenerPrestamo($idPrestamo)
     {
         $sql = $this->consultaPrestamos() . " WHERE p.idPrestamo = :idPrestamo";
@@ -110,7 +110,6 @@ class Prestamos
         }
 
         return array_merge($prestamo, [
-            'totalPagar' => $totalPagar,
             'valorCuota' => $valorCuota,
             'totalPagado' => $totalPagado,
             'saldo' => $saldo,
@@ -142,7 +141,7 @@ class Prestamos
         ]);
     }
 
-    // Nuevo: igual que editar() de actividades.php. La tasa sigue fija en 1%.
+    // Igual que editar() de actividades.php. La tasa sigue fija en 1%.
     public function editar($datos)
     {
         $sql = "UPDATE prestamos
@@ -168,7 +167,7 @@ class Prestamos
         return (bool) $verificar->fetchColumn();
     }
 
-    // Nuevo: igual que eliminar() de actividades.php
+    // Igual que eliminar() de actividades.php
     public function eliminar($idPrestamo)
     {
         $consulta = $this->conexion->prepare("DELETE FROM prestamos WHERE idPrestamo = :idPrestamo");

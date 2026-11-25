@@ -7,11 +7,11 @@ formulario.addEventListener("submit", async function (event) {
     // Lee los campos del formulario y los convierte en un objeto
     const asociado = Object.fromEntries(new FormData(formulario));
 
-  if(asociado.password !== asociado.confirmPassword) {
-    document.getElementById("mensajeRegistro").textContent = "Las contraseñas no coinciden.";
-    return;
-  }
-   delete asociado.confirmPassword;   
+    if (asociado.password !== asociado.confirmPassword) {
+        mensaje.textContent = "Las contraseñas no coinciden.";
+        return;
+    }
+    delete asociado.confirmPassword;
 
     botonGuardar.disabled = true; // Deshabilitar el botón mientras se procesa la solicitud
     mensaje.textContent = "Guardando...";

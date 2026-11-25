@@ -1,10 +1,8 @@
 // Nuevo: controlador de pagos.html, con la misma estructura que actividades.js
 const listaPrestamos = document.getElementById("listaPrestamos");
-const listaPagos = document.getElementById("listaPagos");
 const formulario = document.getElementById("formularioPago");
 const botonGuardar = document.getElementById("botonGuardar");
 let prestamos = [];
-let pagos = [];
 let documentoAsociado = "";
 
 async function solicitarApi(metodo, datos) {
@@ -43,27 +41,23 @@ async function cargarPagos() {
         const resultado = await solicitarApi("GET");
         documentoAsociado = resultado.documento;
         prestamos = resultado.prestamos;
-        pagos = resultado.pagos;
 
         limpiarFormulario();
         mostrarPrestamos();
-        mostrarPagos();
     } catch (error) {
-        mostrarMensajeTabla(listaPrestamos, 8, "No se pudieron cargar los préstamos: " + error.message);
-        mostrarMensajeTabla(listaPagos, 4, "No se pudieron cargar los pagos: " + error.message);
+        mostrarMensajeTabla("No se pudieron cargar los préstamos: " + error.message);
     }
 }
 
-// Igual que en actividades.js, pero recibe la tabla y sus columnas porque esta pagina tiene dos tablas
-function mostrarMensajeTabla(tabla, columnas, mensaje) {
-    tabla.replaceChildren();
+function mostrarMensajeTabla(mensaje) {
+    listaPrestamos.replaceChildren();
     const fila = document.createElement("tr");
     const celda = document.createElement("td");
-    celda.colSpan = columnas;
+    celda.colSpan = 6;
     celda.className = "text-center py-4 text-muted";
     celda.textContent = mensaje;
     fila.append(celda);
-    tabla.append(fila);
+    listaPrestamos.append(fila);
 }
 
 function formatearDinero(valor) {
@@ -73,31 +67,23 @@ function formatearDinero(valor) {
     return Number(valor).toLocaleString("es-CO", { style: "currency", currency: "COP" });
 }
 
-// Fecha de hoy en formato YYYY-MM-DD con la hora local (toISOString sola usa la hora UTC)
-function fechaHoy() {
-    const hoy = new Date();
-    hoy.setMinutes(hoy.getMinutes() - hoy.getTimezoneOffset());
-    return hoy.toISOString().slice(0, 10);
-}
-
 function mostrarPrestamos() {
     if (prestamos.length === 0) {
-        mostrarMensajeTabla(listaPrestamos, 8, "No tienes préstamos registrados");
+        mostrarMensajeTabla("No tienes préstamos registrados");
         return;
     }
     listaPrestamos.replaceChildren();
     prestamos.forEach((prestamo) => {
         const fila = document.createElement("tr");
         fila.dataset.idPrestamo = prestamo.idPrestamo;
-        // text-nowrap: las fechas y los valores no se parten en dos lineas
+        // text-nowrap: los valores no se parten en dos lineas.
+        // Proximo pago y Estado se ven en "Mis Préstamos"; aqui solo lo necesario para abonar.
         fila.append(
             crearCelda(prestamo.idPrestamo),
             crearCelda(formatearDinero(prestamo.valorPrestamo), "text-nowrap"),
             crearCelda(`${prestamo.cuotasPagadas} / ${prestamo.numeroCuotas}`, "text-nowrap"),
             crearCelda(formatearDinero(prestamo.valorCuota), "text-nowrap"),
-            crearCelda(prestamo.proximoPago ?? "—", "text-nowrap"),
-            crearCelda(formatearDinero(prestamo.saldo), "text-nowrap"),
-            crearCeldaEstado(prestamo.estado)
+            crearCelda(formatearDinero(prestamo.saldo), "text-nowrap")
         );
 
         const acciones = document.createElement("td");
@@ -106,30 +92,15 @@ function mostrarPrestamos() {
         botonSeleccionar.className = "btn btn-sm btn-outline-primary text-nowrap";
         botonSeleccionar.innerHTML = `<i class="bi bi-check2-circle"></i> Seleccionar`;
         // Un prestamo pagado ya no recibe abonos
-        botonSeleccionar.disabled = prestamo.estado === "Pagado";
+        if (prestamo.estado === "Pagado") {
+            botonSeleccionar.disabled = true;
+            botonSeleccionar.title = "Préstamo pagado";
+        }
         botonSeleccionar.addEventListener("click", () => seleccionarPrestamo(prestamo));
         acciones.append(botonSeleccionar);
         fila.append(acciones);
 
         listaPrestamos.append(fila);
-    });
-}
-
-function mostrarPagos() {
-    if (pagos.length === 0) {
-        mostrarMensajeTabla(listaPagos, 4, "Todavía no has registrado pagos");
-        return;
-    }
-    listaPagos.replaceChildren();
-    pagos.forEach((pago) => {
-        const fila = document.createElement("tr");
-        fila.append(
-            crearCelda(pago.fechaPago, "text-nowrap"),
-            crearCelda(`#${pago.idPrestamo}`),
-            crearCelda(formatearDinero(pago.valorCuota), "text-nowrap"),
-            crearCelda(pago.metodoPago)
-        );
-        listaPagos.append(fila);
     });
 }
 
@@ -140,21 +111,6 @@ function crearCelda(texto, clase) {
     if (clase) {
         celda.className = clase;
     }
-    return celda;
-}
-
-// Estado con color: verde = al dia, rojo = en mora, gris = pagado (igual que prestamos.js)
-function crearCeldaEstado(estado) {
-    const colores = {
-        "Al día": "text-bg-success",
-        "En mora": "text-bg-danger",
-        "Pagado": "text-bg-secondary"
-    };
-    const celda = document.createElement("td");
-    const etiqueta = document.createElement("span");
-    etiqueta.className = `badge ${colores[estado] ?? "text-bg-light"}`;
-    etiqueta.textContent = estado;
-    celda.append(etiqueta);
     return celda;
 }
 
@@ -170,9 +126,6 @@ function seleccionarPrestamo(prestamo) {
     valorAbono.value = Math.min(prestamo.valorCuota, prestamo.saldo);
     valorAbono.max = prestamo.saldo;
 
-    // La fecha de pago va entre la fecha del prestamo y hoy (lo mismo valida gestionarPagos.php)
-    document.getElementById("fechaPago").min = prestamo.fechaPrestamo;
-
     // Resalta la fila elegida en la tabla
     listaPrestamos.querySelectorAll("tr").forEach((fila) => {
         fila.classList.toggle("table-warning", fila.dataset.idPrestamo === String(prestamo.idPrestamo));
@@ -186,9 +139,6 @@ function limpiarFormulario() {
     formulario.reset();
     document.getElementById("idPrestamo").value = "";
     document.getElementById("documento").value = documentoAsociado;
-    const fechaPago = document.getElementById("fechaPago");
-    fechaPago.value = fechaHoy();
-    fechaPago.max = fechaHoy();
     listaPrestamos.querySelectorAll("tr").forEach((fila) => fila.classList.remove("table-warning"));
     botonGuardar.disabled = true;
 }
@@ -205,14 +155,14 @@ formulario.addEventListener("submit", async (evento) => {
         idPrestamo: Number(idPrestamo),
         documento: document.getElementById("documento").value,
         valorCuota: Number(document.getElementById("valorAbono").value),
-        fechaPago: document.getElementById("fechaPago").value,
+        // La fecha no se envia: el servidor guarda la fecha de hoy
         metodoPago: document.getElementById("metodoPago").value
     };
     botonGuardar.disabled = true; // Evita guardar dos veces el mismo abono
     try {
         await solicitarApi("POST", datos);
         alert("Abono registrado correctamente");
-        cargarPagos(); // Recarga las tablas para ver el nuevo saldo y el historial
+        cargarPagos(); // Recarga la tabla para ver el nuevo saldo
     } catch (error) {
         alert(error.message);
         botonGuardar.disabled = false;

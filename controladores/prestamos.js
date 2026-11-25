@@ -96,7 +96,7 @@ function mostrarPrestamos() {
             crearCelda(formatearDinero(prestamo.saldo), "text-nowrap"),
             crearCeldaEstado(prestamo.estado)
         );
-        // Nuevo: botones de editar y eliminar, igual que en actividades.js
+        // Botones de editar y eliminar, igual que en actividades.js
         if (esAdministrador) {
             const acciones = document.createElement("td");
             acciones.className = "text-nowrap";
@@ -156,6 +156,32 @@ function crearCeldaEstado(estado) {
     return celda;
 }
 
+function abrirCreacion() {
+    formulario.reset();
+    document.getElementById("idPrestamo").value = "";
+    document.getElementById("tasaInteres").value = `${TASA_INTERES}%`;
+    document.getElementById("resumenCuota").textContent = "";
+    document.getElementById("tituloFormulario").textContent = "Nuevo préstamo";
+    document.getElementById("botonGuardar").textContent = "Guardar";
+    modalFormulario.show();
+}
+document.getElementById("botonNuevoPrestamo").addEventListener("click", abrirCreacion);
+
+// Igual que eliminarActividad() de actividades.js
+async function eliminarPrestamo(prestamo) {
+    const confirmacion = window.confirm(`¿Está seguro de que desea eliminar el préstamo #${prestamo.idPrestamo} de ${prestamo.asociado}?`);
+    if (!confirmacion) {
+        return;
+    }
+    try {
+        await solicitarApi("DELETE", { idPrestamo: prestamo.idPrestamo });
+        await cargarPrestamos();
+        alert("Préstamo eliminado correctamente");
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
 function configurarAcciones() {
     if (accionesConfiguradas) {
         return;
@@ -170,18 +196,7 @@ function configurarAcciones() {
     }
 }
 
-function abrirCreacion() {
-    formulario.reset();
-    document.getElementById("idPrestamo").value = "";
-    document.getElementById("tasaInteres").value = `${TASA_INTERES}%`;
-    document.getElementById("resumenCuota").textContent = "";
-    document.getElementById("tituloFormulario").textContent = "Nuevo préstamo";
-    document.getElementById("botonGuardar").textContent = "Guardar";
-    modalFormulario.show();
-}
-document.getElementById("botonNuevoPrestamo").addEventListener("click", abrirCreacion);
-
-// Nuevo: abre el mismo modal con los datos del prestamo (igual que abrirEdicion() de actividades.js)
+// Abre el mismo modal con los datos del prestamo (igual que abrirEdicion() de actividades.js)
 function abrirEdicion(prestamo) {
     formulario.reset();
     document.getElementById("idPrestamo").value = prestamo.idPrestamo;
@@ -195,21 +210,6 @@ function abrirEdicion(prestamo) {
     document.getElementById("tituloFormulario").textContent = "Editar préstamo";
     document.getElementById("botonGuardar").textContent = "Guardar cambios";
     modalFormulario.show();
-}
-
-// Nuevo: igual que eliminarActividad() de actividades.js
-async function eliminarPrestamo(prestamo) {
-    const confirmacion = window.confirm(`¿Está seguro de que desea eliminar el préstamo #${prestamo.idPrestamo} de ${prestamo.asociado}?`);
-    if (!confirmacion) {
-        return;
-    }
-    try {
-        await solicitarApi("DELETE", { idPrestamo: prestamo.idPrestamo });
-        await cargarPrestamos();
-        alert("Préstamo eliminado correctamente");
-    } catch (error) {
-        alert(error.message);
-    }
 }
 
 // Muestra en el modal cuanto se pagara: interes simple, igual que calcularResumen() en prestamos.php
@@ -236,7 +236,7 @@ formulario.addEventListener("submit", async (evento) => {
         numeroCuotas: Number(document.getElementById("numeroCuotas").value),
         fechaPrestamo: document.getElementById("fechaPrestamo").value
     };
-    // Nuevo: si hay id es una edicion (PUT); si no, un prestamo nuevo (POST)
+    // Si hay id es una edicion (PUT); si no, un prestamo nuevo (POST)
     if (idPrestamo) {
         datos.idPrestamo = Number(idPrestamo);
     }

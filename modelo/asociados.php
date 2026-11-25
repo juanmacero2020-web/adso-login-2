@@ -26,7 +26,7 @@ class Asociados
         return $consulta->fetchAll();
     }
 
-    // Nuevo: cuantos prestamos tiene; si tiene, no se deja eliminar (la BD borraria sus prestamos y pagos)
+    // Cuantos prestamos tiene; si tiene, no se deja eliminar (la BD borraria sus prestamos y pagos)
     public function contarPrestamos($idAsociado)
     {
         $consulta = $this->conexion->prepare("SELECT COUNT(*) FROM prestamos WHERE idAsociado = :idAsociado");
@@ -34,7 +34,7 @@ class Asociados
         return (int) $consulta->fetchColumn();
     }
 
-    // Nuevo: igual que editar() de actividades.php. El documento no se cambia.
+    // Igual que editar() de actividades.php. El documento no se cambia.
     public function editar($datos)
     {
         $sql = "UPDATE asociados
@@ -80,7 +80,7 @@ class Asociados
         return (bool) $verificar->fetchColumn();
     }
 
-    // Nuevo: igual que eliminar() de actividades.php
+    // Igual que eliminar() de actividades.php
     public function eliminar($idAsociado)
     {
         $consulta = $this->conexion->prepare("DELETE FROM asociados WHERE idAsociado = :idAsociado");

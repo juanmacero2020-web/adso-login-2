@@ -11,12 +11,16 @@ Front-end en HTML, CSS y JavaScript; los datos se guardan en MySQL con PHP (PDO)
 
 Si ya había una sesión abierta antes de esta versión, hay que cerrar sesión y volver a entrar: el login ahora guarda también el `idAsociado`.
 
-## Cuentas de prueba (solo demostración)
+## Cuentas de prueba
 
-| Email | Contraseña | Rol |
-|---|---|---|
-| admin@gmail.com | 1234 | admin |
-| user1@gmail.com | 1234 | asociado |
+Están en la tabla `asociados`. La contraseña es la que se puso al registrarlas; el admin puede cambiarla desde **Asociados → editar**.
+
+| Email | Rol |
+|---|---|
+| laura.martinez@clubacerias.test | admin |
+| andres.gomez@clubacerias.test | asociado |
+| sofia.rincon@clubacerias.test | asociado |
+| camilo.torres@clubacerias.test | asociado |
 
 ## Pantallas
 
@@ -28,7 +32,7 @@ Si ya había una sesión abierta antes de esta versión, hay que cerrar sesión 
 | `vista/asociados.html` | admin | CRUD de asociados: crear, ver, editar y eliminar (no se elimina a quien tiene préstamos ni a uno mismo) |
 | `vista/prestamos.html` | ambos | Admin: CRUD de préstamos (solo se editan o eliminan los que no tienen pagos). Asociado: estado de sus préstamos |
 | `vista/actividades.html` | admin | Crear, editar y eliminar actividades |
-| `vista/pagos.html` | asociado | Elegir un préstamo, abonarle y ver el historial de pagos |
+| `vista/pagos.html` | asociado | Elegir un préstamo de la tabla y registrarle un abono |
 
 ## Préstamos
 
@@ -50,8 +54,9 @@ config/         conexion.php
 modelo/         clases con las consultas (actividades.php, prestamos.php, pagos.php, asociados.php)
                 y APIs que validan sesión y rol (gestionarActividades.php, gestionarPrestamos.php,
                 gestionarPagos.php, gestionarAsociados.php); asociado.php y guardarAsociado.php
-                para el registro
+                para el registro; iniciarsesion.php y cerrarsesion.php para la sesión
 sql/            cambios a la base de datos
+.htaccess       pide al navegador revisar si hay versión nueva de HTML, JS y CSS (evita ver páginas viejas)
 ```
 
 ## Pendiente
