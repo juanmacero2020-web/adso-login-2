@@ -43,4 +43,8 @@ body {
     --bs-btn-active-color: rgb(255, 255, 255);
     --bs-btn-active-bg: var(--azul-club);
     --bs-btn-active-border-color: var(--azul-club);
+    /* Nuevo: desactivado (ej. "Guardar abono" sin prestamo elegido) sigue naranja pero mas claro */
+    --bs-btn-disabled-color: rgb(255, 255, 255);
+    --bs-btn-disabled-bg: var(--naranja-club);
+    --bs-btn-disabled-border-color: var(--naranja-club);
 }

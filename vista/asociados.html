@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLUB ACERIAS - Asociados</title>
+
+    <!-- Nuevo: CRUD de asociados para el administrador, con el mismo diseño de actividades.html -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Colores del club; va despues de Bootstrap para poder cambiar sus estilos -->
+    <link rel="stylesheet" href="../assets/css/panel.css">
+</head>
+
+<body>
+    <div class="encabezado-club d-flex justify-content-between align-items-center p-3 shadow-sm">
+        <h3 class="mb-0">CLUB ACERIAS - Asociados</h3>
+        <a href="dashboard.html" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-arrow-left"></i> Volver al panel
+        </a>
+    </div>
+
+    <main class="container py-4">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3"
+        >
+            <p class="mb-0 text-muted">
+                Consulta los asociados registrados en el club.
+            </p>
+            <!-- Abre el modal de abajo, igual que "Nueva actividad" -->
+            <button id="botonNuevoAsociado" class="btn btn-club" type="button">
+                <i class="bi bi-person-plus"></i>
+                Añadir asociado
+            </button>
+        </div>
+
+        <div class="card tarjeta-club shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Ciudad</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Préstamos</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAsociados">
+                        <tr>
+                            <td colspan="8" class="text-center py-4">
+                                Cargando asociados...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Nuevo: modal de formulario para crear o editar un asociado (igual que el de actividades.html) -->
+    <div class="modal fade" id="modalFormulario" tabindex="-1" aria-labelledby="tituloFormulario" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form class="modal-content" id="formularioAsociado" novalidate>
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="tituloFormulario">Nuevo asociado</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="idAsociado">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <!-- Al editar queda solo de lectura: el documento identifica al asociado -->
+                            <label for="documento" class="form-label">Documento</label>
+                            <input type="number" class="form-control" id="documento" min="1" required placeholder="1938392928">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" maxlength="100" required placeholder="pepito@gmail.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" maxlength="50" required placeholder="Pepito">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" maxlength="50" required placeholder="Perez Sanchez">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="fechaNacimiento" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="genero" class="form-label">Género</label>
+                            <select class="form-select" id="genero" required>
+                                <option>Masculino</option>
+                                <option>Femenino</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="direccionResidencia" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccionResidencia" maxlength="100" required placeholder="Cra 21 #3-09">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ciudad" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="ciudad" maxlength="50" required placeholder="Sogamoso">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="telefono" maxlength="20" required placeholder="3154857648">
+                        </div>
+                        <!-- Solo se muestra al editar: un asociado nuevo siempre entra con rol "asociado" -->
+                        <div class="col-md-6" id="campoRol">
+                            <label for="rol" class="form-label">Rol</label>
+                            <select class="form-select" id="rol">
+                                <option value="asociado">asociado</option>
+                                <option value="admin">admin</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password" class="form-label" id="etiquetaPassword">Contraseña</label>
+                            <input type="password" class="form-control" id="password" minlength="8" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-club" id="botonGuardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container py-4 text-center text-secondary small">Club Acerías · Sistema de gestión</div>
+    </footer>
+
+    <!-- JS de Bootstrap: necesario para abrir y cerrar el modal -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Se llama listaAsociados.js porque asociados.js ya es el del formulario de registro -->
+    <script src="../controladores/listaAsociados.js"></script>
+</body>
+
+</html>

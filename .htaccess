@@ -1,0 +1,8 @@
+# Nuevo: evita que el navegador muestre versiones viejas de las paginas despues de un cambio.
+# "no-cache" no significa "no guardar": el navegador guarda la copia, pero antes de usarla
+# le pregunta a Apache si cambio (si no cambio, Apache responde 304 y no se descarga de nuevo).
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|js|css)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>

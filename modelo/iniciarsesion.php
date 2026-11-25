@@ -34,7 +34,9 @@ try {
 
  $_SESSION['rol'] = strtolower($asociados['rol']) ;
  $_SESSION['documento'] = $asociados['documento'] ;
-   
+ // Nuevo: las tablas prestamos y actividades_asociado se relacionan por idAsociado, no por documento
+ $_SESSION['idAsociado'] = $asociados['idAsociado'] ;
+
  echo json_encode([
  "success" => true, 
  "rol" => $_SESSION['rol'],
